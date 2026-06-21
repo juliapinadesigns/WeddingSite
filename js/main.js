@@ -62,6 +62,89 @@
     revealEls.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
+  /* ---- Marquee: continuous per-letter sine wave (Squarespace-style) ---- */
+  var mqTrack = document.querySelector(".marquee__track");
+  if (mqTrack) {
+    var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Split every phrase span into per-letter char spans.
+    var phrases = mqTrack.querySelectorAll("span");
+    phrases.forEach(function (span) {
+      var frag = document.createDocumentFragment();
+      // Walk child nodes so we keep the <em> heart intact as one unit.
+      Array.prototype.slice.call(span.childNodes).forEach(function (node) {
+        if (node.nodeType === 3) {
+          // text node -> one char span per character
+          node.textContent.split("").forEach(function (ch) {
+            var c = document.createElement("span");
+            c.className = "marquee__char";
+            c.textContent = /\s/.test(ch) ? "\u00A0" : ch;
+            frag.appendChild(c);
+          });
+        } else if (node.nodeType === 1) {
+          // element (the heart em) -> treat as a single wave unit
+          node.classList.add("marquee__char");
+          frag.appendChild(node);
+        }
+      });
+      span.innerHTML = "";
+      span.appendChild(frag);
+    });
+
+    var chars = Array.prototype.slice.call(mqTrack.querySelectorAll(".marquee__char"));
+
+    function setupWave() {
+      var halfWidth = mqTrack.scrollWidth / 2; // track holds the phrase set twice
+      if (halfWidth <= 0) return;
+
+      // Cache each char's center-x relative to the track.
+      var trackLeft = mqTrack.getBoundingClientRect().left;
+      var centers = chars.map(function (c) {
+        var r = c.getBoundingClientRect();
+        return (r.left - trackLeft) + r.width / 2;
+      });
+
+      var amp = 22; // wave height in px
+      // Choose a wavelength that divides halfWidth so the loop is phase-continuous.
+      var waves = Math.max(1, Math.round(halfWidth / 340));
+      var wavelength = halfWidth / waves;
+      var k = (Math.PI * 2) / wavelength;
+      var speed = 55; // px per second
+
+      var scrollX = 0;
+      var last = performance.now();
+
+      function frame(now) {
+        var dt = (now - last) / 1000;
+        last = now;
+        scrollX -= speed * dt;
+        if (scrollX <= -halfWidth) scrollX += halfWidth;
+
+        mqTrack.style.transform = "translateX(" + scrollX + "px)";
+
+        for (var i = 0; i < chars.length; i++) {
+          var phase = (centers[i] + scrollX) * k;
+          var y = amp * Math.sin(phase);
+          var slope = amp * k * Math.cos(phase); // derivative -> tangent angle
+          var deg = Math.atan(slope) * (180 / Math.PI);
+          chars[i].style.transform =
+            "translateY(" + y.toFixed(2) + "px) rotate(" + deg.toFixed(2) + "deg)";
+        }
+        rafId = requestAnimationFrame(frame);
+      }
+      var rafId = requestAnimationFrame(frame);
+    }
+
+    if (reduceMotion) {
+      // Static gentle wave, no motion.
+      mqTrack.style.transform = "translateX(0)";
+    } else if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(setupWave);
+    } else {
+      window.addEventListener("load", setupWave);
+    }
+  }
+
   /* ---- Countdown ---- */
   var grid = document.getElementById("countdownGrid");
   if (grid) {

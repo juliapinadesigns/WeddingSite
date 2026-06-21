@@ -185,42 +185,39 @@ a { color: inherit; text-decoration: none; }
   left: 0; right: 0;
   top: 60%;
   transform: translateY(-50%) rotate(-2deg);
+  padding: 70px 0;            /* room so the wave isn't clipped top/bottom */
   overflow: hidden;
   pointer-events: none;
 }
 .marquee__track {
-  display: flex;
-  width: max-content;
-  animation: scrollX 30s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
 }
 .marquee__track span {
   font-family: var(--serif);
   font-style: normal;
   font-weight: 500;
-  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.6rem);
   letter-spacing: .01em;
   white-space: nowrap;
-  padding: 0 .65em;
+  padding: 0 .35em;
   color: #fff;
   text-shadow: 0 1px 18px rgba(20,28,22,.35);
-  display: inline-flex;
-  align-items: center;
-  gap: .55em;
+  display: inline-block;
 }
 .marquee__track span em {
   font-style: normal;
   color: #fff;
   font-size: .82em;
+  margin: 0 .1em 0 .4em;
+  vertical-align: middle;
 }
-/* wave: phrases ride a smooth up-and-down curve. Pattern repeats every 6
-   so the 50% scroll loop (12 phrases) stays perfectly seamless. */
-.marquee__track span:nth-child(6n+1) { transform: translateY(24px)  rotate(-4deg); }
-.marquee__track span:nth-child(6n+2) { transform: translateY(6px)   rotate(-4.5deg); }
-.marquee__track span:nth-child(6n+3) { transform: translateY(-20px) rotate(-2deg); }
-.marquee__track span:nth-child(6n+4) { transform: translateY(-24px) rotate(4deg); }
-.marquee__track span:nth-child(6n+5) { transform: translateY(-6px)  rotate(4.5deg); }
-.marquee__track span:nth-child(6n+6) { transform: translateY(20px)  rotate(2deg); }
-@keyframes scrollX { to { transform: translateX(-50%); } }
+/* each letter / heart is positioned along a sine wave by JS */
+.marquee__char {
+  display: inline-block;
+  will-change: transform;
+}
 
 /* =========================================================
    NAME REVEAL
