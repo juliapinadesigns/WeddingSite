@@ -217,7 +217,7 @@ a { color: inherit; text-decoration: none; }
 .marquee__char {
   display: inline-block;
   will-change: transform;
-  margin-right: -.3em;   /* pull letters together (reliable between inline-blocks) */
+  margin-right: -.36em;   /* pull letters together (reliable between inline-blocks) */
 }
 .marquee__char:last-child { margin-right: 0; }
 
