@@ -212,11 +212,14 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
   font-size: .82em;
 }
-/* gentle wave: phrases rise and dip. Pattern repeats every 3 so the
-   50% scroll loop (6 phrases) stays perfectly seamless. */
-.marquee__track span:nth-child(3n+1) { transform: translateY(8px)  rotate(-2.2deg); }
-.marquee__track span:nth-child(3n+2) { transform: translateY(-7px) rotate(2deg); }
-.marquee__track span:nth-child(3n+3) { transform: translateY(2px)  rotate(-1deg); }
+/* wave: phrases ride a smooth up-and-down curve. Pattern repeats every 6
+   so the 50% scroll loop (12 phrases) stays perfectly seamless. */
+.marquee__track span:nth-child(6n+1) { transform: translateY(24px)  rotate(-4deg); }
+.marquee__track span:nth-child(6n+2) { transform: translateY(6px)   rotate(-4.5deg); }
+.marquee__track span:nth-child(6n+3) { transform: translateY(-20px) rotate(-2deg); }
+.marquee__track span:nth-child(6n+4) { transform: translateY(-24px) rotate(4deg); }
+.marquee__track span:nth-child(6n+5) { transform: translateY(-6px)  rotate(4.5deg); }
+.marquee__track span:nth-child(6n+6) { transform: translateY(20px)  rotate(2deg); }
 @keyframes scrollX { to { transform: translateX(-50%); } }
 
 /* =========================================================
