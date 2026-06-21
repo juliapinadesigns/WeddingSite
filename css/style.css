@@ -199,9 +199,9 @@ a { color: inherit; text-decoration: none; }
   font-style: normal;
   font-weight: 500;
   font-size: clamp(1.2rem, 2.4vw, 2rem);
-  letter-spacing: -.26em;
+  letter-spacing: normal;
   white-space: nowrap;
-  padding: 0 .55em;
+  padding: 0 .35em;
   color: #fff;
   text-shadow: none;
   display: inline-block;
@@ -210,14 +210,16 @@ a { color: inherit; text-decoration: none; }
   font-style: normal;
   color: #fff;
   font-size: .82em;
-  margin: 0 .1em 0 .4em;
+  margin: 0 .05em 0 .15em;
   vertical-align: middle;
 }
 /* each letter / heart is positioned along a sine wave by JS */
 .marquee__char {
   display: inline-block;
   will-change: transform;
+  margin-right: -.18em;   /* pull letters together (reliable between inline-blocks) */
 }
+.marquee__char:last-child { margin-right: 0; }
 
 /* =========================================================
    NAME REVEAL
