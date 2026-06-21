@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julia &amp; Louis — We're Getting Married</title>
+  <meta name="description" content="Julia & Louis are getting married. Join us to celebrate." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Julia and Louis home">J<span class="nav__amp">+</span>L</a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="index.html" class="is-active">Home</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="story.html">Our Story</a>
+        <a href="travel.html">Travel</a>
+        <a href="faq.html">FAQ</a>
+        <a href="gallery.html">Gallery</a>
+      </nav>
+
+      <a href="rsvp.html" class="nav__rsvp">RSVP</a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero__media" id="heroMedia"></div>
+    <div class="hero__veil"></div>
+
+    <!-- whimsical scrolling marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>We're getting married <em>&#10084;</em></span>
+        <span>We're getting married <em>&#10084;</em></span>
+        <span>We're getting married <em>&#10084;</em></span>
+        <span>We're getting married <em>&#10084;</em></span>
+        <span>We're getting married <em>&#10084;</em></span>
+        <span>We're getting married <em>&#10084;</em></span>
+      </div>
+    </div>
+
+    <a href="#reveal" class="hero__scroll" aria-label="Scroll down">
+      <span class="hero__scroll-dot"></span>
+    </a>
+  </section>
+
+  <!-- ===================== NAME REVEAL ===================== -->
+  <section class="reveal" id="reveal">
+    <div class="reveal__inner reveal-on-scroll">
+      <p class="reveal__eyebrow">Together with their families</p>
+      <h1 class="reveal__names">Julia <span class="amp">&amp;</span> Louis</h1>
+      <span class="sparkle" aria-hidden="true">&#10022;</span>
+      <p class="reveal__date">Saturday, September 26, 2026 &middot; Provence, France</p>
+      <p class="reveal__sub">Life can be unpredictable. Our love for each other isn't. We can't wait to celebrate the day with the people we love most.</p>
+    </div>
+  </section>
+
+  <!-- ===================== COUNTDOWN ===================== -->
+  <section class="countdown" id="countdown">
+    <div class="wave wave--top" aria-hidden="true"></div>
+    <div class="countdown__inner reveal-on-scroll">
+      <p class="countdown__label">Counting down to forever</p>
+      <div class="countdown__grid" id="countdownGrid" data-date="2026-09-26T16:00:00">
+        <div class="countdown__cell"><span class="countdown__num" id="cdDays">--</span><span class="countdown__unit">Days</span></div>
+        <div class="countdown__cell"><span class="countdown__num" id="cdHours">--</span><span class="countdown__unit">Hours</span></div>
+        <div class="countdown__cell"><span class="countdown__num" id="cdMins">--</span><span class="countdown__unit">Minutes</span></div>
+        <div class="countdown__cell"><span class="countdown__num" id="cdSecs">--</span><span class="countdown__unit">Seconds</span></div>
+      </div>
+    </div>
+    <div class="wave wave--bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== QUICK LINKS ===================== -->
+  <section class="explore">
+    <div class="explore__head reveal-on-scroll">
+      <span class="sparkle sparkle--sm" aria-hidden="true">&#10022;</span>
+      <h2>Everything you need to know</h2>
+      <p>We've gathered the details here. Take a look around &mdash; and don't forget to RSVP.</p>
+    </div>
+
+    <div class="explore__grid">
+      <a class="card reveal-on-scroll" href="schedule.html">
+        <span class="card__kicker">01</span>
+        <h3>Schedule</h3>
+        <p>The full timeline of our weekend, from welcome drinks to the last dance.</p>
+        <span class="card__cta">View schedule &rarr;</span>
+      </a>
+      <a class="card reveal-on-scroll" href="story.html">
+        <span class="card__kicker">02</span>
+        <h3>Our Story</h3>
+        <p>How two people found each other &mdash; the long, lovely version.</p>
+        <span class="card__cta">Read our story &rarr;</span>
+      </a>
+      <a class="card reveal-on-scroll" href="travel.html">
+        <span class="card__kicker">03</span>
+        <h3>Travel</h3>
+        <p>Where to stay, how to get there, and what to do while you're in town.</p>
+        <span class="card__cta">Plan your trip &rarr;</span>
+      </a>
+      <a class="card reveal-on-scroll" href="faq.html">
+        <span class="card__kicker">04</span>
+        <h3>FAQ</h3>
+        <p>Dress code, plus-ones, kids, and everything else you might wonder.</p>
+        <span class="card__cta">Get answers &rarr;</span>
+      </a>
+      <a class="card reveal-on-scroll" href="gallery.html">
+        <span class="card__kicker">05</span>
+        <h3>Gallery</h3>
+        <p>A few of our favorite moments together over the years.</p>
+        <span class="card__cta">See photos &rarr;</span>
+      </a>
+      <a class="card card--accent reveal-on-scroll" href="rsvp.html">
+        <span class="card__kicker">&#10084;</span>
+        <h3>RSVP</h3>
+        <p>Let us know if you can make it. We truly hope you can.</p>
+        <span class="card__cta">Respond now &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer__inner reveal-on-scroll">
+      <p class="footer__mono">J <span>&#10022;</span> L</p>
+      <p class="footer__date">09 &middot; 26 &middot; 2026</p>
+      <p class="footer__tag">#JuliaAndLouis</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

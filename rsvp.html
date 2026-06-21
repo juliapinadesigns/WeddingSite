@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP — Julia &amp; Louis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .stub{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;
+      background:radial-gradient(120% 90% at 70% 10%,var(--lavender-soft),transparent 55%),var(--ivory);}
+    .stub h1{font-size:clamp(2.6rem,8vw,5rem);line-height:1;}
+    .stub p{color:var(--ink-soft);max-width:460px;margin:22px auto 0;}
+    .stub .back{margin-top:34px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--ink);border-radius:40px;padding:11px 26px;transition:.3s;}
+    .stub .back:hover{background:var(--sage-deep);color:var(--ivory);border-color:var(--sage-deep);}
+  </style>
+</head>
+<body>
+  <header class="nav is-scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">J<span class="nav__amp">+</span>L</a>
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="story.html">Our Story</a>
+        <a href="travel.html">Travel</a>
+        <a href="faq.html">FAQ</a>
+        <a href="gallery.html">Gallery</a>
+      </nav>
+      <a href="rsvp.html" class="nav__rsvp">RSVP</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <main class="stub">
+    <span class="sparkle" aria-hidden="true">&#10022;</span>
+    <h1>RSVP</h1>
+    <p>Our RSVP form is coming soon. We can’t wait to celebrate with you.</p>
+    <a class="back" href="index.html">&larr; Back home</a>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
