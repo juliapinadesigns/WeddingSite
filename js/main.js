@@ -175,4 +175,70 @@
     tick();
     setInterval(tick, 1000);
   }
+
+  /* ---- Photo carousel ---- */
+  var carousel = document.getElementById("carousel");
+  if (carousel) {
+    var track = document.getElementById("carouselTrack");
+    var slides = Array.prototype.slice.call(track.querySelectorAll(".carousel__slide"));
+    var dotsWrap = document.getElementById("carouselDots");
+    var prevBtn = document.getElementById("carouselPrev");
+    var nextBtn = document.getElementById("carouselNext");
+    var index = 0;
+    var count = slides.length;
+
+    // build dots
+    var dots = slides.map(function (_, i) {
+      var b = document.createElement("button");
+      b.className = "carousel__dot" + (i === 0 ? " is-active" : "");
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-label", "Photo " + (i + 1));
+      b.addEventListener("click", function () { go(i); });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function render() {
+      track.style.transform = "translateX(" + (-index * 100) + "%)";
+      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === index); });
+    }
+    function go(i) { index = (i + count) % count; render(); restart(); }
+    function next() { go(index + 1); }
+    function prev() { go(index - 1); }
+
+    nextBtn.addEventListener("click", next);
+    prevBtn.addEventListener("click", prev);
+
+    // keyboard
+    carousel.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    });
+
+    // autoplay (pause on hover / reduced motion)
+    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var timer = null;
+    function restart() {
+      if (reduce) return;
+      clearInterval(timer);
+      timer = setInterval(next, 5000);
+    }
+    carousel.addEventListener("mouseenter", function () { clearInterval(timer); });
+    carousel.addEventListener("mouseleave", restart);
+
+    // swipe
+    var startX = 0, dragging = false;
+    track.addEventListener("touchstart", function (e) {
+      startX = e.touches[0].clientX; dragging = true;
+    }, { passive: true });
+    track.addEventListener("touchend", function (e) {
+      if (!dragging) return;
+      dragging = false;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    }, { passive: true });
+
+    render();
+    restart();
+  }
 })();

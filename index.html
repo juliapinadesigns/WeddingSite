@@ -88,51 +88,45 @@
     <div class="wave wave--bottom" aria-hidden="true"></div>
   </section>
 
-  <!-- ===================== QUICK LINKS ===================== -->
-  <section class="explore">
-    <div class="explore__head reveal-on-scroll">
+  <!-- ===================== PHOTO CAROUSEL ===================== -->
+  <section class="gallery-carousel">
+    <div class="gallery-carousel__head reveal-on-scroll">
       <span class="sparkle sparkle--sm" aria-hidden="true">&#10022;</span>
-      <h2>Everything you need to know</h2>
-      <p>We've gathered the details here. Take a look around &mdash; and don't forget to RSVP.</p>
+      <h2>A few of our favorite moments</h2>
+      <p>Some snapshots from the road to forever.</p>
     </div>
 
-    <div class="explore__grid">
-      <a class="card reveal-on-scroll" href="schedule.html">
-        <span class="card__kicker">01</span>
-        <h3>Schedule</h3>
-        <p>The full timeline of our weekend, from welcome drinks to the last dance.</p>
-        <span class="card__cta">View schedule &rarr;</span>
-      </a>
-      <a class="card reveal-on-scroll" href="story.html">
-        <span class="card__kicker">02</span>
-        <h3>Our Story</h3>
-        <p>How two people found each other &mdash; the long, lovely version.</p>
-        <span class="card__cta">Read our story &rarr;</span>
-      </a>
-      <a class="card reveal-on-scroll" href="travel.html">
-        <span class="card__kicker">03</span>
-        <h3>Travel</h3>
-        <p>Where to stay, how to get there, and what to do while you're in town.</p>
-        <span class="card__cta">Plan your trip &rarr;</span>
-      </a>
-      <a class="card reveal-on-scroll" href="faq.html">
-        <span class="card__kicker">04</span>
-        <h3>FAQ</h3>
-        <p>Dress code, plus-ones, kids, and everything else you might wonder.</p>
-        <span class="card__cta">Get answers &rarr;</span>
-      </a>
-      <a class="card reveal-on-scroll" href="gallery.html">
-        <span class="card__kicker">05</span>
-        <h3>Gallery</h3>
-        <p>A few of our favorite moments together over the years.</p>
-        <span class="card__cta">See photos &rarr;</span>
-      </a>
-      <a class="card card--accent reveal-on-scroll" href="rsvp.html">
-        <span class="card__kicker">&#10084;</span>
-        <h3>RSVP</h3>
-        <p>Let us know if you can make it. We truly hope you can.</p>
-        <span class="card__cta">Respond now &rarr;</span>
-      </a>
+    <div class="carousel reveal-on-scroll" id="carousel" aria-roledescription="carousel" aria-label="Photos of Julia and Louis">
+      <div class="carousel__viewport">
+        <div class="carousel__track" id="carouselTrack">
+          <!-- Replace the src on each <img> with your own photos. -->
+          <figure class="carousel__slide">
+            <img class="carousel__img" src="assets/hero.jpg" alt="Julia and Louis" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
+            <figcaption class="carousel__caption">Us, lately</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img class="carousel__img" src="assets/gallery-1.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
+            <figcaption class="carousel__caption">Add a photo</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img class="carousel__img" src="assets/gallery-2.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
+            <figcaption class="carousel__caption">Add a photo</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img class="carousel__img" src="assets/gallery-3.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
+            <figcaption class="carousel__caption">Add a photo</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img class="carousel__img" src="assets/gallery-4.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
+            <figcaption class="carousel__caption">Add a photo</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <button class="carousel__arrow carousel__arrow--prev" id="carouselPrev" aria-label="Previous photo">&#8249;</button>
+      <button class="carousel__arrow carousel__arrow--next" id="carouselNext" aria-label="Next photo">&#8250;</button>
+
+      <div class="carousel__dots" id="carouselDots" role="tablist" aria-label="Choose photo"></div>
     </div>
   </section>
 
