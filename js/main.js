@@ -77,8 +77,9 @@
           // text node -> one char span per character
           node.textContent.split("").forEach(function (ch) {
             var c = document.createElement("span");
-            c.className = "marquee__char";
-            c.textContent = /\s/.test(ch) ? "\u00A0" : ch;
+            var isSpace = /\s/.test(ch);
+            c.className = isSpace ? "marquee__char marquee__space" : "marquee__char";
+            c.textContent = isSpace ? "\u00A0" : ch;
             frag.appendChild(c);
           });
         } else if (node.nodeType === 1) {
