@@ -4,6 +4,30 @@
 (function () {
   "use strict";
 
+  /* ---- Preloader: fade in once the hero photo has loaded ---- */
+  (function () {
+    var preloader = document.getElementById("preloader");
+    var revealed = false;
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      document.body.classList.add("is-loaded");
+      // remove the overlay from the layout after it fades out
+      window.setTimeout(function () {
+        if (preloader) preloader.classList.add("is-done");
+      }, 800);
+    }
+    // The hero is a CSS background-image, so preload it manually to know
+    // when it has finished decoding.
+    var hero = new Image();
+    hero.onload = reveal;
+    hero.onerror = reveal;
+    hero.src = "assets/hero.jpg";
+    if (hero.complete) reveal();           // cached
+    window.addEventListener("load", reveal); // belt-and-suspenders
+    window.setTimeout(reveal, 4000);        // never get stuck
+  })();
+
   /* ---- Nav: solid background on scroll ---- */
   var nav = document.getElementById("nav");
   function onScroll() {

@@ -3,3 +3,6 @@ node_modules/
 *.log
 .vercel
 .env*
+
+# local full-res backups of compressed photos (not deployed)
+assets/originals/
