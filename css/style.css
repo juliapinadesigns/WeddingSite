@@ -212,14 +212,15 @@ a { color: inherit; text-decoration: none; }
   font-size: .82em;
   /* big left margin adds back the .7em the previous letter pulls in, so the
      gap BEFORE the heart matches the gap AFTER it. Tune left margin to balance. */
-  margin: 0 .05em 0 .9em;
+  margin: 0 .05em 0 .75em;
   vertical-align: middle;
 }
 /* each letter / heart is positioned along a sine wave by JS */
 .marquee__char {
   display: inline-block;
   will-change: transform;
-  margin-right: -.7em;   /* pull letters together (reliable between inline-blocks) */
+  margin-right: -.44em;  /* tighten letters. NOTE: ~-.5em is the limit — past
+                            that, letters overlap into a blob. */
 }
 .marquee__char:last-child { margin-right: 0; }
 
