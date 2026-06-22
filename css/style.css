@@ -201,7 +201,7 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(1.2rem, 2.4vw, 2rem);
   letter-spacing: normal;
   white-space: nowrap;
-  padding: 0;
+  padding: 0 .15em;        /* gap after the heart (between sentences) */
   color: #fff;
   text-shadow: none;
   display: inline-block;
@@ -210,6 +210,9 @@ a { color: inherit; text-decoration: none; }
   font-style: normal;
   color: #fff;
   font-size: .82em;
+  /* big left margin adds back the .7em the previous letter pulls in, so the
+     gap BEFORE the heart matches the gap AFTER it. Tune left margin to balance. */
+  margin: 0 .05em 0 .9em;
   vertical-align: middle;
 }
 /* each letter / heart is positioned along a sine wave by JS */
@@ -218,13 +221,7 @@ a { color: inherit; text-decoration: none; }
   will-change: transform;
   margin-right: -.7em;   /* pull letters together (reliable between inline-blocks) */
 }
-/* heart: equal gap on both sides. The preceding letter's -.7em negative margin
-   eats into the left gap, so margin-left adds that .7em back -> both gaps equal.
-   To widen/narrow the gap, change BOTH numbers by the same amount. */
-.marquee__char.marquee__heart {
-  margin-left: 1.2em;   /* = .5em gap + .7em to cancel the letter's negative margin */
-  margin-right: .5em;   /* = .5em gap */
-}
+.marquee__char:last-child { margin-right: 0; }
 
 /* =========================================================
    NAME REVEAL
