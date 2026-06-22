@@ -67,6 +67,12 @@
   if (mqTrack) {
     var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Drop whitespace-only text nodes between phrases so the only spacing
+    // comes from CSS (keeps the heart centered between sentences).
+    Array.prototype.slice.call(mqTrack.childNodes).forEach(function (n) {
+      if (n.nodeType === 3 && !/\S/.test(n.textContent)) mqTrack.removeChild(n);
+    });
+
     // Split every phrase span into per-letter char spans.
     var phrases = mqTrack.querySelectorAll("span");
     phrases.forEach(function (span) {
@@ -74,16 +80,19 @@
       // Walk child nodes so we keep the <em> heart intact as one unit.
       Array.prototype.slice.call(span.childNodes).forEach(function (node) {
         if (node.nodeType === 3) {
-          // text node -> one char span per character
-          node.textContent.split("").forEach(function (ch) {
+          // text node -> one char span per character (collapse + trim spaces
+          // so there's no stray space hugging the heart)
+          var txt = node.textContent.replace(/\s+/g, " ").trim();
+          if (!txt) return;
+          txt.split("").forEach(function (ch) {
             var c = document.createElement("span");
             c.className = "marquee__char";
-            c.textContent = /\s/.test(ch) ? "\u00A0" : ch;
+            c.textContent = ch === " " ? "\u00A0" : ch;
             frag.appendChild(c);
           });
         } else if (node.nodeType === 1) {
-          // element (the heart em) -> treat as a single wave unit
-          node.classList.add("marquee__char");
+          // element (the heart em) -> a single wave unit, spaced symmetrically
+          node.classList.add("marquee__char", "marquee__heart");
           frag.appendChild(node);
         }
       });
