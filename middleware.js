@@ -25,9 +25,12 @@ export default async function middleware(request) {
   if (request.method === "POST" && url.pathname === "/__auth") {
     let entered = "";
     try {
-      const form = await request.formData();
-      entered = (form.get("password") || "").toString();
+      // Parse the raw body (formData() can be unavailable in edge middleware).
+      const body = await request.text();
+      entered = new URLSearchParams(body).get("password") || "";
     } catch (e) { /* ignore */ }
+
+    console.log("[gate] login attempt — match:", entered === PASSWORD, "len:", entered.length);
 
     if (entered === PASSWORD) {
       // Only flag the cookie Secure on https — browsers drop Secure cookies
