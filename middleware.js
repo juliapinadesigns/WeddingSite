@@ -82,8 +82,7 @@ function gateHtml(error) {
 'box-shadow:0 40px 80px -46px rgba(58,70,60,.5);backdrop-filter:blur(6px);' +
 'animation:rise .9s cubic-bezier(.22,.61,.36,1) both;}' +
 '@keyframes rise{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}' +
-'.gate__heart{color:var(--blue-accent);font-size:1.6rem;line-height:1;}' +
-'.gate__mono{font-family:var(--serif);font-size:1.5rem;letter-spacing:.14em;margin:14px 0 0;}' +
+'.gate__mono{font-family:var(--serif);font-size:1.5rem;letter-spacing:.14em;margin:0;}' +
 '.gate__mono span{color:var(--blue-accent);padding:0 .12em;}' +
 '.gate h1{font-family:var(--serif);font-weight:500;font-size:2.2rem;margin:18px 0 6px;line-height:1.15;}' +
 '.gate p{color:var(--ink-soft);font-size:.98rem;margin:0 0 26px;}' +
@@ -99,7 +98,6 @@ function gateHtml(error) {
 '.gate__err{color:#b4604f;font-size:.86rem;margin:0;}' +
 '</style></head><body>' +
 '<main class="gate">' +
-'<div class="gate__heart">&#10084;</div>' +
 '<p class="gate__mono">J <span>&#10022;</span> L</p>' +
 '<h1>Enter Site Password</h1>' +
 '<p>hint: it&rsquo;s our dog&rsquo;s name in all caps</p>' +
