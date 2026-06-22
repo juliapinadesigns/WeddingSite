@@ -87,7 +87,7 @@ function gateHtml(error) {
 '.gate__mono span{color:var(--blue-accent);padding:0 .12em;}' +
 '.gate h1{font-family:var(--serif);font-weight:500;font-size:2.2rem;margin:18px 0 6px;line-height:1.15;}' +
 '.gate p{color:var(--ink-soft);font-size:.98rem;margin:0 0 26px;}' +
-'.gate form{display:flex;flex-direction:column;gap:14px;}' +
+'.gate form{display:flex;flex-direction:column;gap:16px;}' +
 '.gate input{font-family:var(--sans);font-size:1rem;text-align:center;letter-spacing:.04em;' +
 'padding:14px 16px;border:1px solid rgba(111,126,94,.3);border-radius:12px;background:var(--ivory);' +
 'color:var(--ink);outline:none;transition:border-color .3s,box-shadow .3s;}' +
@@ -96,19 +96,17 @@ function gateHtml(error) {
 'padding:14px 18px;border:none;border-radius:12px;background:var(--sage-deep);color:var(--ivory);' +
 'cursor:pointer;transition:background .3s,letter-spacing .3s,transform .3s;}' +
 '.gate button:hover{background:var(--ink);letter-spacing:.24em;transform:translateY(-1px);}' +
-'.gate__err{color:#b4604f;font-size:.86rem;margin:-4px 0 0;min-height:1.1em;}' +
-'.gate__foot{margin-top:26px;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);}' +
+'.gate__err{color:#b4604f;font-size:.86rem;margin:0;}' +
 '</style></head><body>' +
 '<main class="gate">' +
 '<div class="gate__heart">&#10084;</div>' +
 '<p class="gate__mono">J <span>&#10022;</span> L</p>' +
-'<h1>A little something private</h1>' +
-'<p>This page is just for our favorite people. Enter the password to come on in.</p>' +
+'<h1>Enter Site Password</h1>' +
+'<p>hint: it&rsquo;s our dog&rsquo;s name in all caps</p>' +
 '<form method="POST" action="/__auth" autocomplete="off">' +
 '<input type="password" name="password" placeholder="Password" aria-label="Password" autofocus required />' +
-'<p class="gate__err">' + (error ? "That’s not quite it &mdash; try again." : "") + '</p>' +
+(error ? '<p class="gate__err">That&rsquo;s not quite it &mdash; try again.</p>' : "") +
 '<button type="submit">Enter</button>' +
 '</form>' +
-'<p class="gate__foot">04 &middot; 08 &middot; 2028 &middot; Atlanta</p>' +
 '</main></body></html>';
 }
