@@ -129,9 +129,9 @@
         return (r.left - trackLeft) + r.width / 2;
       });
 
-      var amp = 18; // wave height in px
+      var amp = 30; // wave height in px
       // Choose a wavelength that divides halfWidth so the loop is phase-continuous.
-      var waves = Math.max(1, Math.round(halfWidth / 560));
+      var waves = Math.max(1, Math.round(halfWidth / 460));
       var wavelength = halfWidth / waves;
       var k = (Math.PI * 2) / wavelength;
       var speed = 55; // px per second
