@@ -196,39 +196,64 @@
       stripTrack.appendChild(clone);
     });
 
-    // Entrance: reveal when the section scrolls into view.
+    // Run callback once every <img> in the strip has decoded, so we measure
+    // widths only when layout is final (prevents a reset-point drift / jump).
+    function whenImagesReady(cb) {
+      var imgs = Array.prototype.slice.call(stripTrack.querySelectorAll("img"));
+      var pending = imgs.filter(function (im) { return !im.complete || im.naturalWidth === 0; });
+      if (!pending.length) { cb(); return; }
+      var remaining = pending.length;
+      function done() { if (--remaining <= 0) cb(); }
+      pending.forEach(function (im) {
+        im.addEventListener("load", done, { once: true });
+        im.addEventListener("error", done, { once: true });
+      });
+    }
+
+    var scrolling = false;
     function startScroll() {
-      if (stripReduce) return;
-      // first clone sits exactly one full set (+ one gap) from the start
+      if (stripReduce || scrolling) return;
+      // first clone sits exactly one full set (+ one gap) from the start.
+      // Use getBoundingClientRect for sub-pixel precision (offsetLeft rounds,
+      // which would accrue drift and cause a small hitch each loop).
+      var firstChild = stripTrack.children[0];
       var firstClone = stripTrack.children[setLength];
-      var shift = firstClone ? firstClone.offsetLeft : stripTrack.scrollWidth / 2;
-      if (shift <= 0) { window.addEventListener("load", startScroll, { once: true }); return; }
+      var shift = (firstChild && firstClone)
+        ? (firstClone.getBoundingClientRect().left - firstChild.getBoundingClientRect().left)
+        : stripTrack.scrollWidth / 2;
+      if (shift <= 0) return;
+      scrolling = true;
       var x = 0, last = performance.now(), speed = 40; // px/sec
       function frame(now) {
         var dt = (now - last) / 1000; last = now;
         x -= speed * dt;
         if (x <= -shift) x += shift;
-        stripTrack.style.transform = "translateX(" + x + "px)";
+        stripTrack.style.transform = "translateX(" + x.toFixed(2) + "px)";
         requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
+    }
+
+    function beginStrip() {
+      stripSection.classList.add("is-in");
+      // wait for the entrance to settle AND images to decode, then run the conveyor
+      whenImagesReady(function () {
+        setTimeout(startScroll, stripReduce ? 0 : 900);
+      });
     }
 
     if ("IntersectionObserver" in window) {
       var stripIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            stripSection.classList.add("is-in");
             stripIO.unobserve(entry.target);
-            // wait for the entrance to settle, then run the conveyor
-            setTimeout(startScroll, stripReduce ? 0 : 900);
+            beginStrip();
           }
         });
       }, { threshold: 0.2 });
       stripIO.observe(stripSection);
     } else {
-      stripSection.classList.add("is-in");
-      startScroll();
+      beginStrip();
     }
   }
 })();
