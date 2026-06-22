@@ -16,42 +16,13 @@ export const config = { matcher: "/:path*" };
 
 const COOKIE = "wedding_gate";
 const TOKEN = "jl-0408-2028-ok"; // cookie value once unlocked
-const PASSWORD = (typeof process !== "undefined" && process.env && process.env.SITE_PASSWORD) || "LINCOLN";
 
-export default async function middleware(request) {
+export default function middleware(request) {
   const url = new URL(request.url);
 
-  // --- Handle the login form submission ---
-  if (request.method === "POST" && url.pathname === "/__auth") {
-    let entered = "";
-    try {
-      // Parse the raw body (formData() can be unavailable in edge middleware).
-      const body = await request.text();
-      entered = new URLSearchParams(body).get("password") || "";
-    } catch (e) { /* ignore */ }
-
-    console.log("[gate] login attempt — match:", entered === PASSWORD, "len:", entered.length);
-
-    if (entered === PASSWORD) {
-      // Only flag the cookie Secure on https — browsers drop Secure cookies
-      // over http://localhost, which would break local testing.
-      var proto = request.headers.get("x-forwarded-proto") || url.protocol.replace(":", "");
-      var secure = proto === "https" ? "; Secure" : "";
-      return new Response(null, {
-        status: 303,
-        headers: {
-          Location: "/",
-          "Set-Cookie": COOKIE + "=" + TOKEN +
-            "; Path=/; Max-Age=2592000; HttpOnly" + secure + "; SameSite=Lax",
-        },
-      });
-    }
-    // wrong password -> re-show the gate with an error
-    return new Response(gateHtml(true), {
-      status: 401,
-      headers: { "content-type": "text/html; charset=utf-8" },
-    });
-  }
+  // Let the login endpoint through — it reads the POST body and sets the cookie.
+  // (Edge middleware can't read request bodies, so the check lives in /api/auth.)
+  if (url.pathname.startsWith("/api/")) return next();
 
   // --- Already unlocked? let the request through ---
   const cookie = request.headers.get("cookie") || "";
@@ -62,7 +33,7 @@ export default async function middleware(request) {
   if (authed) return next();
 
   // --- Locked: show the custom gate ---
-  return new Response(gateHtml(false), {
+  return new Response(gateHtml(url.searchParams.get("error") === "1"), {
     status: 401,
     headers: { "content-type": "text/html; charset=utf-8" },
   });
@@ -108,7 +79,7 @@ function gateHtml(error) {
 '<p class="gate__mono">J <span>&#10022;</span> L</p>' +
 '<h1>Enter Site Password</h1>' +
 '<p>hint: it&rsquo;s our dog&rsquo;s name in all caps</p>' +
-'<form method="POST" action="/__auth" autocomplete="off">' +
+'<form method="POST" action="/api/auth" autocomplete="off">' +
 '<input type="password" name="password" placeholder="Password" aria-label="Password" autofocus required />' +
 (error ? '<p class="gate__err">That&rsquo;s not quite it &mdash; try again.</p>' : "") +
 '<button type="submit">Enter</button>' +
