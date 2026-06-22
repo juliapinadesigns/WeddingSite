@@ -30,12 +30,16 @@ export default async function middleware(request) {
     } catch (e) { /* ignore */ }
 
     if (entered === PASSWORD) {
+      // Only flag the cookie Secure on https — browsers drop Secure cookies
+      // over http://localhost, which would break local testing.
+      var proto = request.headers.get("x-forwarded-proto") || url.protocol.replace(":", "");
+      var secure = proto === "https" ? "; Secure" : "";
       return new Response(null, {
         status: 303,
         headers: {
           Location: "/",
           "Set-Cookie": COOKIE + "=" + TOKEN +
-            "; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax",
+            "; Path=/; Max-Age=2592000; HttpOnly" + secure + "; SameSite=Lax",
         },
       });
     }
