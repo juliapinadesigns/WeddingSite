@@ -88,45 +88,15 @@
     <div class="wave wave--bottom" aria-hidden="true"></div>
   </section>
 
-  <!-- ===================== PHOTO CAROUSEL ===================== -->
-  <section class="gallery-carousel">
-    <div class="gallery-carousel__head reveal-on-scroll">
-      <span class="sparkle sparkle--sm" aria-hidden="true">&#10022;</span>
-      <h2>A few of our favorite moments</h2>
-      <p>Some snapshots from the road to forever.</p>
-    </div>
-
-    <div class="carousel reveal-on-scroll" id="carousel" aria-roledescription="carousel" aria-label="Photos of Julia and Louis">
-      <div class="carousel__viewport">
-        <div class="carousel__track" id="carouselTrack">
-          <!-- Replace the src on each <img> with your own photos. -->
-          <figure class="carousel__slide">
-            <img class="carousel__img" src="assets/hero.jpg" alt="Julia and Louis" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
-            <figcaption class="carousel__caption">Us, lately</figcaption>
-          </figure>
-          <figure class="carousel__slide">
-            <img class="carousel__img" src="assets/gallery-1.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
-            <figcaption class="carousel__caption">Add a photo</figcaption>
-          </figure>
-          <figure class="carousel__slide">
-            <img class="carousel__img" src="assets/gallery-2.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
-            <figcaption class="carousel__caption">Add a photo</figcaption>
-          </figure>
-          <figure class="carousel__slide">
-            <img class="carousel__img" src="assets/gallery-3.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
-            <figcaption class="carousel__caption">Add a photo</figcaption>
-          </figure>
-          <figure class="carousel__slide">
-            <img class="carousel__img" src="assets/gallery-4.jpg" alt="" onerror="this.closest('.carousel__slide').classList.add('is-missing')" />
-            <figcaption class="carousel__caption">Add a photo</figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <button class="carousel__arrow carousel__arrow--prev" id="carouselPrev" aria-label="Previous photo">&#8249;</button>
-      <button class="carousel__arrow carousel__arrow--next" id="carouselNext" aria-label="Next photo">&#8250;</button>
-
-      <div class="carousel__dots" id="carouselDots" role="tablist" aria-label="Choose photo"></div>
+  <!-- ===================== PHOTO STRIP ===================== -->
+  <section class="photo-strip" aria-label="Photos of Julia and Louis">
+    <div class="photo-strip__track" id="photoStripTrack">
+      <img class="photo-strip__img" src="assets/caro-1.jpg" alt="" />
+      <img class="photo-strip__img" src="assets/caro-2.jpg" alt="" />
+      <img class="photo-strip__img" src="assets/caro-3.jpg" alt="" />
+      <img class="photo-strip__img" src="assets/caro-4.jpg" alt="" />
+      <img class="photo-strip__img" src="assets/caro-5.jpg" alt="" />
+      <img class="photo-strip__img" src="assets/caro-6.jpg" alt="" />
     </div>
   </section>
 

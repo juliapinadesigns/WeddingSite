@@ -176,69 +176,59 @@
     setInterval(tick, 1000);
   }
 
-  /* ---- Photo carousel ---- */
-  var carousel = document.getElementById("carousel");
-  if (carousel) {
-    var track = document.getElementById("carouselTrack");
-    var slides = Array.prototype.slice.call(track.querySelectorAll(".carousel__slide"));
-    var dotsWrap = document.getElementById("carouselDots");
-    var prevBtn = document.getElementById("carouselPrev");
-    var nextBtn = document.getElementById("carouselNext");
-    var index = 0;
-    var count = slides.length;
+  /* ---- Photo strip: scroll-in entrance + continuous auto-scroll ---- */
+  var stripSection = document.querySelector(".photo-strip");
+  var stripTrack = document.getElementById("photoStripTrack");
+  if (stripSection && stripTrack) {
+    var stripReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // build dots
-    var dots = slides.map(function (_, i) {
-      var b = document.createElement("button");
-      b.className = "carousel__dot" + (i === 0 ? " is-active" : "");
-      b.setAttribute("role", "tab");
-      b.setAttribute("aria-label", "Photo " + (i + 1));
-      b.addEventListener("click", function () { go(i); });
-      dotsWrap.appendChild(b);
-      return b;
+    // Tag images for the staggered entrance.
+    var originals = Array.prototype.slice.call(stripTrack.querySelectorAll(".photo-strip__img"));
+    originals.forEach(function (img, i) {
+      img.style.setProperty("--i", i);
     });
 
-    function render() {
-      track.style.transform = "translateX(" + (-index * 100) + "%)";
-      dots.forEach(function (d, i) { d.classList.toggle("is-active", i === index); });
-    }
-    function go(i) { index = (i + count) % count; render(); restart(); }
-    function next() { go(index + 1); }
-    function prev() { go(index - 1); }
-
-    nextBtn.addEventListener("click", next);
-    prevBtn.addEventListener("click", prev);
-
-    // keyboard
-    carousel.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") next();
-      else if (e.key === "ArrowLeft") prev();
+    // Duplicate the set so the loop is seamless.
+    var setLength = originals.length;
+    originals.forEach(function (img) {
+      var clone = img.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      stripTrack.appendChild(clone);
     });
 
-    // autoplay (pause on hover / reduced motion)
-    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var timer = null;
-    function restart() {
-      if (reduce) return;
-      clearInterval(timer);
-      timer = setInterval(next, 5000);
+    // Entrance: reveal when the section scrolls into view.
+    function startScroll() {
+      if (stripReduce) return;
+      // first clone sits exactly one full set (+ one gap) from the start
+      var firstClone = stripTrack.children[setLength];
+      var shift = firstClone ? firstClone.offsetLeft : stripTrack.scrollWidth / 2;
+      if (shift <= 0) { window.addEventListener("load", startScroll, { once: true }); return; }
+      var x = 0, last = performance.now(), speed = 40; // px/sec
+      function frame(now) {
+        var dt = (now - last) / 1000; last = now;
+        x -= speed * dt;
+        if (x <= -shift) x += shift;
+        stripTrack.style.transform = "translateX(" + x + "px)";
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
-    carousel.addEventListener("mouseenter", function () { clearInterval(timer); });
-    carousel.addEventListener("mouseleave", restart);
 
-    // swipe
-    var startX = 0, dragging = false;
-    track.addEventListener("touchstart", function (e) {
-      startX = e.touches[0].clientX; dragging = true;
-    }, { passive: true });
-    track.addEventListener("touchend", function (e) {
-      if (!dragging) return;
-      dragging = false;
-      var dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
-    }, { passive: true });
-
-    render();
-    restart();
+    if ("IntersectionObserver" in window) {
+      var stripIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            stripSection.classList.add("is-in");
+            stripIO.unobserve(entry.target);
+            // wait for the entrance to settle, then run the conveyor
+            setTimeout(startScroll, stripReduce ? 0 : 900);
+          }
+        });
+      }, { threshold: 0.2 });
+      stripIO.observe(stripSection);
+    } else {
+      stripSection.classList.add("is-in");
+      startScroll();
+    }
   }
 })();
