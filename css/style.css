@@ -220,7 +220,7 @@ a { color: inherit; text-decoration: none; }
 .marquee__char {
   display: inline-block;
   will-change: transform;
-  margin-right: -.44em;  /* tighten letters. NOTE: ~-.5em is the limit — past
+  margin-right: -.35em;  /* tighten letters. NOTE: ~-.5em is the limit — past
                             that, letters overlap into a blob. */
 }
 .marquee__char:last-child { margin-right: 0; }
@@ -229,7 +229,7 @@ a { color: inherit; text-decoration: none; }
 /* This overrides the letter rule for the spaces only. Bigger = wider gaps
    between words; negative = tighter. */
 .marquee__space {
-  margin-right: .15em;
+  margin-right: -.05em;
 }
 
 /* =========================================================
